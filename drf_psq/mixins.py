@@ -40,7 +40,10 @@ class PsqMixin(object):
 
         psq_rules = self._psq_get_rules(view)
         if self.lookup_field in self.kwargs:
-            obj = self.get_object() if self.detail else None
+            try:
+                obj = self.get_object()
+            except:
+                obj = None
 
         permitted_rule = None
         for rule in psq_rules:
