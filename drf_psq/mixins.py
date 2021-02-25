@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from rest_framework.permissions import BasePermission
+from django.http import Http404
 
 from .utils import and_permissions, get_caller_name
 
@@ -40,10 +41,7 @@ class PsqMixin(object):
 
         psq_rules = self._psq_get_rules(view)
         if self.lookup_field in self.kwargs:
-            try:
-                obj = self.get_object()
-            except:
-                obj = None
+            obj = self.get_object()
 
         permitted_rule = None
         for rule in psq_rules:
