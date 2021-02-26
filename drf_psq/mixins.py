@@ -50,10 +50,10 @@ class PsqMixin(object):
 
             if (self.lookup_field in self.kwargs) and hp:
                 current_obj = obj if (rule.get_obj is None) else rule.get_obj(self, obj)
-                hop = p.has_object_permission(self.request, view, current_obj)
+                hop = p.has_object_permission(self.request, self, current_obj)
             elif (self.parent_lookup_field in self.kwargs) and (rule.get_obj is not None) and hp:
                 #Permission based on parent object for non-detail actions
-                hop = p.has_object_permission(self.request, view, rule.get_obj(self))
+                hop = p.has_object_permission(self.request, self, rule.get_obj(self))
             else:
                 hop = True
 
