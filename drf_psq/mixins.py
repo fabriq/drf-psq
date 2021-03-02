@@ -105,7 +105,7 @@ class PsqMixin(object):
         if not self._psq_check(view):
             return super().get_queryset()
 
-        if get_caller_name() == self.get_object.__name__:
+        if get_caller_name() in [self.get_object.__name__, self.get_queryset.__name__]:
             return super().get_queryset()
 
         rule = self._psq_get_permitted_rule(view)
