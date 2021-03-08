@@ -3,7 +3,7 @@
 from rest_framework.permissions import BasePermission
 from django.http import Http404
 
-from .utils import and_permissions, get_caller_name
+from .utils import and_permissions, get_caller_name, Rule
 
 
 class PsqMixin(object):
@@ -36,6 +36,9 @@ class PsqMixin(object):
 
 
     def _psq_get_permitted_rule(self, view):
+        if self.request.user.is_superuser:
+            return Rule()
+
         if hasattr(self, '_psq_permitted_rule'):
             return self._psq_permitted_rule
 
